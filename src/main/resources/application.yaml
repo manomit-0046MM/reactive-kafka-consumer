@@ -1,0 +1,50 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: reactive-kafka-consumer
+  r2dbc:
+    pool:
+      enabled: true
+      initial-size: 50
+      max-size: 100
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  kafka:
+    bootstrap-servers: ${BOOTSTRAP_SERVER}
+    topic:
+      name: "copo.locationref.topic.internal.any.v1"
+    properties:
+      schema:
+        registry:
+          url: ${SR_URL}
+      basic:
+        auth:
+          credentials:
+            source: USER_INFO
+          user:
+            info: ${SR_API_KEY}:${SR_API_SECRET}
+      sasl:
+        jaas:
+          config: org.apache.kafka.common.security.plain.PlainLoginModule
+            required username="${CLUSTER_API_KEY}" password="${CLUSTER_API_SECRET}";
+        mechanism: PLAIN
+      security:
+        protocol: SASL_SSL
+      ssl:
+        endpoint:
+          identification:
+            algorithm: https
+    consumer:
+      group-id: reactive-kafka-poc-consumer-id-2
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+      properties:
+        isolation:
+          level: read_committed
+        specific:
+          avro:
+            reader: true
+      valueDeserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer

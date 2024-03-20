@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reactive-kafka-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reactive-kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: reactive-kafka-consumer
+    spec:
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+      - name: reactive-kafka-consumer
+        image: locationacrmm.azurecr.io/reactive-kafka-consumer:latest
+        ports:
+        - containerPort: 8082
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: reactive-kafka-consumer-svc
+spec:
+  ports:
+  - port: 8082
+  selector:
+    app: reactive-kafka-consumer
