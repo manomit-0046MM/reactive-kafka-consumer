@@ -29,7 +29,7 @@ jobs:
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - run: |
-        docker build -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/reactive-kafka-consumer:latest --build-arg cluster_api_key=${{secrets.CLUSTER_API_KEY}} --build-arg cluster_api_secret=${{secrets.CLUSTER_API_SECRET}} --build-arg sr_api_key=${{secrets.SR_API_KEY}} --build-arg sr_api_secret=${{secrets.SR_API_SECRET}} --build-arg sr_url=${{secrets.SR_URL}} --build-arg bootstrap_server=${{secrets.BOOTSTRAP_SERVER}} .
+        docker build -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/reactive-kafka-consumer:latest --build-arg db_url=${{secrets.DB_URL}} --build-arg cluster_api_key=${{secrets.CLUSTER_API_KEY}} --build-arg cluster_api_secret=${{secrets.CLUSTER_API_SECRET}} --build-arg sr_api_key=${{secrets.SR_API_KEY}} --build-arg sr_api_secret=${{secrets.SR_API_SECRET}} --build-arg sr_url=${{secrets.SR_URL}} --build-arg db_user=${{secrets.DB_USER}} --build-arg db_password=${{secrets.DB_PASSWORD}} --build-arg bootstrap_server=${{secrets.BOOTSTRAP_SERVER}} .
         docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/reactive-kafka-consumer:latest
     - name: Set AKS context
       uses: Azure/aks-set-context@v1

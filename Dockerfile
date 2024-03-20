@@ -3,6 +3,12 @@
 #
 FROM eclipse-temurin:17-jdk-jammy AS build
 ENV HOME=/usr/app
+ARG db_url
+ENV DB_URL=$db_url
+ARG db_user
+ENV DB_USER=$db_user
+ARG db_password
+ENV DB_PASSWORD=$db_password
 RUN mkdir -p $HOME
 WORKDIR $HOME
 ADD . $HOME
@@ -23,15 +29,9 @@ ARG cluster_api_key
 ENV CLUSTER_API_KEY=$cluster_api_key
 ARG cluster_api_secret
 ENV CLUSTER_API_SECRET=$cluster_api_secret
-#ARG db_url
-#ENV DB_URL=$db_url
-#ENV DB_URL=r2dbc:postgresql://mydemopg.postgres.database.azure.com:5432/location?ssl=true&sslmode=require
-#ARG db_user
-#ENV DB_USER=$db_user
-#ENV DB_USER=postgres
-#ARG db_password
-#ENV DB_PASSWORD=$db_password
-#ENV DB_PASSWORD=admin123#
+ENV DB_URL=$db_url
+ENV DB_USER=$db_user
+ENV DB_PASSWORD=$db_password
 ARG sr_api_secret
 ENV SR_API_SECRET=$sr_api_secret
 ARG JAR_FILE=/usr/app/target/REACTIVE_KAFKA_CONSUMER.jar

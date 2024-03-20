@@ -26,6 +26,7 @@ public class ConsumerService {
     private final LocationRepository repository;
 
 
+
     @Value("${spring.kafka.topic.name}")
     private String topicName;
 
@@ -37,7 +38,7 @@ public class ConsumerService {
         this.repository = repository;
     }
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(cron = "0 2 1 * * ?")
     public void consumeLocation() {
         locationConsumerTemplate
                 .receive()
