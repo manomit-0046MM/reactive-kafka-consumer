@@ -29,8 +29,11 @@ ARG cluster_api_key
 ENV CLUSTER_API_KEY=$cluster_api_key
 ARG cluster_api_secret
 ENV CLUSTER_API_SECRET=$cluster_api_secret
+ARG db_url
 ENV DB_URL=$db_url
+ARG db_user
 ENV DB_USER=$db_user
+ARG db_password
 ENV DB_PASSWORD=$db_password
 ARG sr_api_secret
 ENV SR_API_SECRET=$sr_api_secret
