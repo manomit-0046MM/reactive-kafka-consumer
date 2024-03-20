@@ -8,9 +8,9 @@ spring:
       enabled: true
       initial-size: 50
       max-size: 100
-    url: ${DB_URL}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: r2dbc:postgresql://mydemopg.postgres.database.azure.com:5432/location?ssl=true&sslmode=require
+    username: postgres
+    password: admin123#
   kafka:
     bootstrap-servers: ${BOOTSTRAP_SERVER}
     topic:

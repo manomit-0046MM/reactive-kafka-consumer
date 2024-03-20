@@ -25,13 +25,13 @@ ARG cluster_api_secret
 ENV CLUSTER_API_SECRET=$cluster_api_secret
 #ARG db_url
 #ENV DB_URL=$db_url
-ENV DB_URL=r2dbc:postgresql://mydemopg.postgres.database.azure.com:5432/location?ssl=true&sslmode=require
+#ENV DB_URL=r2dbc:postgresql://mydemopg.postgres.database.azure.com:5432/location?ssl=true&sslmode=require
 #ARG db_user
 #ENV DB_USER=$db_user
-ENV DB_USER=postgres
+#ENV DB_USER=postgres
 #ARG db_password
 #ENV DB_PASSWORD=$db_password
-ENV DB_PASSWORD=admin123#
+#ENV DB_PASSWORD=admin123#
 ARG sr_api_secret
 ENV SR_API_SECRET=$sr_api_secret
 ARG JAR_FILE=/usr/app/target/REACTIVE_KAFKA_CONSUMER.jar
