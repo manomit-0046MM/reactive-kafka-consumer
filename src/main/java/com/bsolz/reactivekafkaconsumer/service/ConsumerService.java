@@ -6,7 +6,6 @@ import com.bsolz.reactivekafkaconsumer.repository.LocationRepository;
 import com.bsolz.reactivekafkaconsumer.utils.EntityDtoUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.reactive.ReactiveKafkaConsumerTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -25,11 +24,6 @@ public class ConsumerService {
 
     private final LocationRepository repository;
 
-
-
-    @Value("${spring.kafka.topic.name}")
-    private String topicName;
-
     public ConsumerService(
             final ReactiveKafkaConsumerTemplate<String, Location> locationConsumerTemplate,
             final LocationRepository repository
@@ -45,7 +39,7 @@ public class ConsumerService {
                 .doOnNext(record -> LOGGER.debug("Received event: key {}", record.key()))
                 .flatMap(this::storeLocation)
                 .doOnError(ex -> LOGGER.error("Error receiving event, will retry {}", ex.getMessage()))
-                .retryWhen(Retry.fixedDelay(Long.MAX_VALUE, Duration.ofSeconds(20)))
+                .retryWhen(Retry.fixedDelay(5, Duration.ofSeconds(10)))
                 .onErrorResume(ex -> Mono.empty())
                 .subscribe(record -> record.receiverOffset().acknowledge());
     }
